@@ -5,11 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BlazorProject.Api.Domain.Models;
-
-public abstract class BaseEntity
+public class Entry:BaseEntity
 {
-    public Guid Id { get; set; }
-    public DateTime CreatedDate { get; set; }
-    public DateTime? UpdateDate { get; set; }
-
+    public Guid CreatedById { get; set; }
+    public string Subject { get; set; }
+    public string Content { get; set; }
 }
