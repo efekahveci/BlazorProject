@@ -11,17 +11,35 @@ namespace BlazorProject.Infrastructure.Persistance.Context;
 
 public class BlazorSocialContext:DbContext
 {
+    public BlazorSocialContext()
+    {
+
+    }
     public BlazorSocialContext(DbContextOptions options):base(options)
     {
 
     }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            const string cs = "User ID=postgres;Password=123;Server=localhost;Port=5432;Database=BlazorSocialContext;Integrated Security=true;Pooling=true;";
 
-    public User Users { get; set; }
-    public Entry Entries { get; set; }
-    public EntryComment EntryComments { get; set; }
-    public EntryClap EntryClaps { get; set; }
-    public EntryStar EntryStars { get; set; }
-    public EmailConfirmation EmailConfirmations { get; set; }
+            optionsBuilder.UseNpgsql(cs);
+
+
+
+        }
+
+        base.OnConfiguring(optionsBuilder);
+    }
+
+    public DbSet<User> Users { get; set; }
+    public DbSet<Entry> Entries { get; set; }
+    public DbSet<EntryComment> EntryComments { get; set; }
+    public DbSet<EntryClap> EntryClaps { get; set; }
+    public DbSet<EntryStar> EntryStars { get; set; }
+    public DbSet<EmailConfirmation> EmailConfirmations { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace BlazorProject.Infrastructure.Persistance;
 public static class ServiceRegistration
 {
-    public static void AddPersistanceLayer(this IServiceCollection serviceCollection, IConfiguration configuration = null)
+    public static void AddPersistanceLayer(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
 
         serviceCollection.AddDbContext<BlazorSocialContext>(options =>
