@@ -5,16 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BlazorProject.Api.Domain.Models;
-
-public class Entry:BaseEntity
+public class User:BaseEntity
 {
-    public Guid CreatedById { get; set; }
-    public string Subject { get; set; }
-    public string Content { get; set; }
+    public string Nickname { get; set; }
+    public string Email { get; set; }
+    public string Pass { get; set; }
 
-    public virtual User CreatedBy { get; set; }
+    public virtual ICollection<Entry> Entries{ get; set; }
     public virtual ICollection<EntryComment> EntryComments { get; set; }
-    public virtual ICollection<EntryClap> EntryClaps { get; set; }
     public virtual ICollection<EntryStar> EntryStars { get; set; }
-
 }
