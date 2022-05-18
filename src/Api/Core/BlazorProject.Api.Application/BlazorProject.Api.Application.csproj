@@ -6,4 +6,8 @@
   
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BlazorProject.Api.Domain\BlazorProject.Api.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
