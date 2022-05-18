@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BlazorProject.Api.Application.Interfaces.Repositories;
 using BlazorProject.Infrastructure.Persistance.Context;
+using BlazorProject.Infrastructure.Persistance.ContextEngine;
+using BlazorProject.Infrastructure.Persistance.Repositories;
 using BlazorProject.Infrastructure.Persistance.Seed;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,11 +27,17 @@ public static class ServiceRegistration
 
         seed.SeedAsync(configuration).GetAwaiter().GetResult();
 
+
+        serviceCollection.AddScoped<IUserRepository, UserRepository>();
+
         return serviceCollection;
     }
 
 
 
-  
+    public static void ConfigureRequestPipeline(this IApplicationBuilder application)
+    {
+        EngineContext.Current.ConfigureRequestPipeline(application);
+    }
 
 }
