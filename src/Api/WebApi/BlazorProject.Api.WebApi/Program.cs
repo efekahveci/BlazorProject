@@ -1,3 +1,4 @@
+using BlazorProject.Api.Application;
 using BlazorProject.Infrastructure.Persistance;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddPersistanceLayer(builder.Configuration);
+builder.Services.AddApplicationLayer();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
