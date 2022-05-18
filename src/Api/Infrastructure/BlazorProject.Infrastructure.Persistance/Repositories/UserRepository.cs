@@ -7,7 +7,7 @@ using BlazorProject.Api.Application.Interfaces.Repositories;
 using BlazorProject.Api.Domain.Models;
 
 namespace BlazorProject.Infrastructure.Persistance.Repositories;
-internal class UserRepository : GenericRepository<User>, IUserRepository
+public class UserRepository : GenericRepository<User>, IUserRepository
 {
     
 }

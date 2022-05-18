@@ -1,4 +1,5 @@
-﻿using BlazorProject.Common.Models;
+﻿using BlazorProject.Api.Application.Interfaces.Repositories;
+using BlazorProject.Common.Models;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -17,4 +18,3 @@ namespace BlazorProject.Api.Application.Features.Commands.User
         }
     }
 }
-+
