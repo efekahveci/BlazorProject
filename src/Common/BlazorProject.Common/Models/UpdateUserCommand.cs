@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace BlazorProject.Common.Models
 {
-    public class LoginUserCommand:IRequest<LoginUserView>
+    public class UpdateUserCommand:IRequest<Guid>
     {
+        public Guid Id { get; set; }
         [Email]
-        public string Email { get;  set; }
-        [Password]
-        public string Pass { get;  set; }
-
-      
+        public string Email { get; set; }
+        [Username]
+        public string Nickname { get; set; }
+  
     }
 }

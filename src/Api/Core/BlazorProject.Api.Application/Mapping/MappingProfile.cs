@@ -14,6 +14,8 @@ namespace BlazorProject.Api.Application.Mapping
         public MappingProfile()
         {
             CreateMap<User, LoginUserView>().ReverseMap();
+            CreateMap<User, CreateUserCommand>().ReverseMap();
+            CreateMap<User, UpdateUserCommand>().ReverseMap();
         }
     }
 }
