@@ -9,6 +9,7 @@ using BlazorProject.Infrastructure.Persistance.ContextEngine;
 using BlazorProject.Infrastructure.Persistance.Repositories;
 using BlazorProject.Infrastructure.Persistance.Seed;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +19,11 @@ public static class ServiceRegistration
 {
     public static IServiceCollection AddPersistanceLayer(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
+        serviceCollection.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        serviceCollection.AddSingleton<IEngine, BlazorSocialContextEngine>();
+        serviceCollection.AddScoped<IUserRepository, UserRepository>();
+
+ 
 
         serviceCollection.AddDbContext<BlazorSocialContext>(options =>
         options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
@@ -27,8 +33,6 @@ public static class ServiceRegistration
 
         seed.SeedAsync(configuration).GetAwaiter().GetResult();
 
-
-        serviceCollection.AddScoped<IUserRepository, UserRepository>();
 
         return serviceCollection;
     }

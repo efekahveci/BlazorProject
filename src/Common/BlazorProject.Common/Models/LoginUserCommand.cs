@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using BlazorProject.Common.Attributes;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,10 @@ namespace BlazorProject.Common.Models
 {
     public class LoginUserCommand:IRequest<LoginUserView>
     {
-        public string Email { get; private set; }
-        public string Pass { get; private set; }
+        [Email]
+        public string Email { get;  set; }
+        [Password]
+        public string Pass { get;  set; }
 
         public LoginUserCommand(string email,string pass)
         {

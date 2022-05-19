@@ -28,7 +28,7 @@ internal class SeedData
     public async Task SeedAsync(IConfiguration configuration)
     {
         var dbcontextBuilder = new DbContextOptionsBuilder();
-        dbcontextBuilder.UseNpgsql("User ID=postgres;Password=123;Server=localhost;Port=5432;Database=BlazorSocialContext;Integrated Security=true;Pooling=true;");
+        dbcontextBuilder.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
 
         var context = new BlazorSocialContext(dbcontextBuilder.Options);
 
