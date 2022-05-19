@@ -4,13 +4,14 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using BlazorProject.Api.Application.Interfaces.Repositories;
 using BlazorProject.Api.Domain.Models;
 using BlazorProject.Infrastructure.Persistance.Context;
 using BlazorProject.Infrastructure.Persistance.ContextEngine;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlazorProject.Infrastructure.Persistance.Repositories;
-public  class GenericRepository<TEntity> where TEntity : BaseEntity
+public  class GenericRepository<TEntity>:IGenericRepository<TEntity> where TEntity : BaseEntity
 {
     private readonly BlazorSocialContext _context;
 
@@ -23,7 +24,7 @@ public  class GenericRepository<TEntity> where TEntity : BaseEntity
 
 
 
-    public virtual  IQueryable<TEntity> GetAllQuery => Table.AsNoTracking().OrderByDescending(x => x.CreatedDate).AsQueryable();
+    public virtual  IQueryable<TEntity> GetAllQuery => Table.AsNoTracking().AsQueryable();
 
 
     public virtual  async Task Create(TEntity entity)
@@ -45,7 +46,7 @@ public  class GenericRepository<TEntity> where TEntity : BaseEntity
 
     public virtual  IQueryable<TEntity> GetAllQueryInc(Expression<Func<TEntity, object>> includes)
     {
-        return Table.Include(includes).AsNoTracking().Where(x => x.Status == true).AsQueryable();
+        return Table.Include(includes).AsNoTracking().AsQueryable();
     }
 
 

@@ -8,5 +8,6 @@ using BlazorProject.Api.Domain.Models;
 namespace BlazorProject.Api.Application.Interfaces.Repositories;
 public interface IUserRepository:IGenericRepository<User>
 {
+   Task<User> GetUser(string email);
 
 }
