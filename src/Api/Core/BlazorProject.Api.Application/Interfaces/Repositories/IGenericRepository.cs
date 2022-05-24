@@ -15,12 +15,12 @@ public interface IGenericRepository<TEntity> where TEntity : BaseEntity
     IQueryable<TEntity> GetAllQueryInc(Expression<Func<TEntity, object>> includes);
     Task<TEntity> GetById(Guid id);
     Task<TEntity> GetByIdInc(Guid id, Expression<Func<TEntity, object>> includes);
-    Task Create(TEntity entity);
-    Task UniqueCreate(TEntity entity);
+    Task<bool> Create(TEntity entity);
+    Task<bool> UniqueCreate(TEntity entity);
 
-    Task Update(TEntity entity);
+    Task<bool> Update(TEntity entity);
 
-    Task Delete(Guid id);
+    Task<bool> Delete(Guid id);
 
 
 }

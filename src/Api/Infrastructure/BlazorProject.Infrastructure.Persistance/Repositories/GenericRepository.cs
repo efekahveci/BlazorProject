@@ -27,19 +27,21 @@ public  class GenericRepository<TEntity>:IGenericRepository<TEntity> where TEnti
     public virtual  IQueryable<TEntity> GetAllQuery => Table.AsNoTracking().AsQueryable();
 
 
-    public virtual  async Task Create(TEntity entity)
+    public virtual  async Task<bool> Create(TEntity entity)
     {
          await Table.AddAsync(entity);
         await _context.SaveChangesAsync();
+        return true;
     }
 
-    public virtual  async Task Delete(Guid id)
+    public virtual  async Task<bool> Delete(Guid id)
     {
 
         var entity = Table.Find();
         entity.Status = false;
         Table.Update(entity);
         await _context.SaveChangesAsync();
+        return true;
     }
 
 
@@ -69,7 +71,7 @@ public  class GenericRepository<TEntity>:IGenericRepository<TEntity> where TEnti
 
 
 
-    public virtual  async Task UniqueCreate(TEntity entity)
+    public virtual  async Task<bool> UniqueCreate(TEntity entity)
     {
         var result = await Table.AsNoTracking().FirstOrDefaultAsync(e => e.Id == entity.Id);
 
@@ -77,16 +79,18 @@ public  class GenericRepository<TEntity>:IGenericRepository<TEntity> where TEnti
         {
             await Table.AddAsync(entity);
             await _context.SaveChangesAsync();
+            return true;
         }
+        return false;
     }
 
-    public virtual  async Task Update(TEntity entity)
+    public virtual  async Task<bool> Update(TEntity entity)
     {
 
         Table.Update(entity);
 
         await _context.SaveChangesAsync();
-
+        return true;
 
 
 

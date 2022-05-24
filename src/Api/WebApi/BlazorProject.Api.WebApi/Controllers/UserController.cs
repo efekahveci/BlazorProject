@@ -25,5 +25,21 @@ namespace BlazorProject.Api.WebApi.Controllers
             return Ok(result);
         }
 
+        [HttpPost("create")]
+        public async Task<IActionResult> Create([FromBody] CreateUserCommand user)
+        {
+            var result = await _mediator.Send(user);
+
+            return Ok(result);
+        }
+
+        [HttpPost("update")]
+        public async Task<IActionResult> Update([FromBody] UpdateUserCommand user)
+        {
+            var result = await _mediator.Send(user);
+
+            return Ok(result);
+        }
+
     }
 }
