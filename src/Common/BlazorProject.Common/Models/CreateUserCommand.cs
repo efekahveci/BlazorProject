@@ -6,15 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlazorProject.Common.Models
+namespace BlazorProject.Common.Models;
+
+public class CreateUserCommand:IRequest<Guid>
 {
-    public class CreateUserCommand:IRequest<Guid>
-    {
-        [Email]
-        public string Email { get; set; }
-        [Username]
-        public string Nickname { get; set; }
-        [Password]
-        public string Pass { get; set; }
-    }
+    [Email]
+    public string Email { get; set; }
+    [Username]
+    public string Nickname { get; set; }
+    [Password]
+    public string Pass { get; set; }
 }
