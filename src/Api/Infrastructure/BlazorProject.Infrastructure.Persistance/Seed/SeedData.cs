@@ -32,37 +32,42 @@ internal class SeedData
 
         var context = new BlazorSocialContext(dbcontextBuilder.Options);
 
-        var users = GetUsers();
-        var userIds = users.Select(x => x.Id);
+        if (context.Users.Count() < 500)
+        {
 
 
-        await context.Users.AddRangeAsync(users);
 
-        var guids = Enumerable.Range(0,150).Select(x=>Guid.NewGuid()).ToList();
+            var users = GetUsers();
+            var userIds = users.Select(x => x.Id);
 
-        int counter = 0;
 
-        var entries = new Faker<Entry>("tr")
-            .RuleFor(x => x.Id, x => guids[counter++])
-            .RuleFor(x => x.Subject, x => x.Lorem.Sentence(5, 5))
-            .RuleFor(x => x.Content, x => x.Lorem.Paragraph(2))
-            .RuleFor(x => x.CreatedById, x => x.PickRandom(userIds))
-            .Generate(150);
+            await context.Users.AddRangeAsync(users);
 
-        await context.Entries.AddRangeAsync(entries);
+            var guids = Enumerable.Range(0, 150).Select(x => Guid.NewGuid()).ToList();
 
-        var comments = new Faker<EntryComment>("tr")
-          .RuleFor(x => x.Id, x => Guid.NewGuid())
-          .RuleFor(x => x.Content, x => x.Lorem.Paragraph(2))
-          .RuleFor(x => x.CreatedById, x => x.PickRandom(userIds))
-          .RuleFor(x=>x.EntryId,x=>x.PickRandom(guids))
-          .Generate(1500);
+            int counter = 0;
 
-        await context.EntryComments.AddRangeAsync(comments);
+            var entries = new Faker<Entry>("tr")
+                .RuleFor(x => x.Id, x => guids[counter++])
+                .RuleFor(x => x.Subject, x => x.Lorem.Sentence(5, 5))
+                .RuleFor(x => x.Content, x => x.Lorem.Paragraph(2))
+                .RuleFor(x => x.CreatedById, x => x.PickRandom(userIds))
+                .Generate(150);
 
-        await context.SaveChangesAsync();
+            await context.Entries.AddRangeAsync(entries);
+
+            var comments = new Faker<EntryComment>("tr")
+              .RuleFor(x => x.Id, x => Guid.NewGuid())
+              .RuleFor(x => x.Content, x => x.Lorem.Paragraph(2))
+              .RuleFor(x => x.CreatedById, x => x.PickRandom(userIds))
+              .RuleFor(x => x.EntryId, x => x.PickRandom(guids))
+              .Generate(1500);
+
+            await context.EntryComments.AddRangeAsync(comments);
+
+            await context.SaveChangesAsync();
+        }
     }
-
 
 
 }
