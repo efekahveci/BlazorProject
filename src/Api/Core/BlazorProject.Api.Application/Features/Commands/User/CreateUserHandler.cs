@@ -9,31 +9,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlazorProject.Api.Application.Features.Commands.User
+namespace BlazorProject.Api.Application.Features.Commands.User;
+
+public class CreateUserHandler : IRequestHandler<CreateUserCommand, Guid>
 {
-    public class CreateUserHandler : IRequestHandler<CreateUserCommand, Guid>
+    private readonly IMapper _mapper;
+    private readonly IUserRepository _repository;
+
+    public CreateUserHandler(IMapper mapper, IUserRepository repository)
     {
-        private readonly IMapper _mapper;
-        private readonly IUserRepository _repository;
+        _mapper = mapper;
+        _repository = repository;
+    }
 
-        public CreateUserHandler(IMapper mapper, IUserRepository repository)
-        {
-            _mapper = mapper;
-            _repository = repository;
-        }
+    public async Task<Guid> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    {
+        var user = await _repository.GetUser(request.Email);
 
-        public async Task<Guid> Handle(CreateUserCommand request, CancellationToken cancellationToken)
-        {
-            var user = await _repository.GetUser(request.Email);
+        if (user is not null)
+            throw new DbValidEx("User already exist");
 
-            if (user is not null)
-                throw new DbValidEx("User already exist");
+        var dbUser = _mapper.Map<Domain.Models.User>(request);
 
-            var dbUser = _mapper.Map<Domain.Models.User>(request);
+        await  _repository.Create(dbUser);
 
-            var result =  _repository.Create(dbUser);
-
-            return dbUser.Id;
-        }
+        return dbUser.Id;
     }
 }
