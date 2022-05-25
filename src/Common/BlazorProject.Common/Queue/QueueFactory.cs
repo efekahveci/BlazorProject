@@ -11,11 +11,10 @@ using RabbitMQ.Client.Events;
 namespace BlazorProject.Common.Queue;
 public  static class QueueFactory
 {
-    private static readonly IConfiguration _conf;
-   
+    
     public static void SendMesaageToExchange(string exchangeName, string exchangeType, string queueName,object obj)
     {
-        var channel = CreateBasicConsumer().EnsureExchange(exchangeName, exchangeType).EnsureQueue(queueName, queueName).Model;
+        var channel = CreateBasicConsumer().EnsureExchange(exchangeName, exchangeType).EnsureQueue(queueName, exchangeName).Model;
 
         var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(obj));
 
@@ -24,7 +23,8 @@ public  static class QueueFactory
 
     public static EventingBasicConsumer CreateBasicConsumer()
     {
-        var factory = new ConnectionFactory() { HostName = _conf["RabbitMQ:Hostname"], Port = Convert.ToInt32(_conf["RabbitMQ:Port"]) };
+       
+        var factory = new ConnectionFactory() { HostName = RabbitMQConstans.Hostname };
         var conn = factory.CreateConnection();
         var channel = conn.CreateModel();
 

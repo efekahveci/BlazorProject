@@ -47,7 +47,7 @@ public class UpdateUserHandler : IRequestHandler<UpdateUserCommand, Guid>
                 NewEmail = dbUser.Email
             };
 
-            QueueFactory.SendMesaageToExchange(_conf["RabbitMQ:UserExchangeName"], _conf["RabbitMQ:ExchangeType"], _conf["RabbitMQ:UserEmailChangeQueueName"], @event);
+            QueueFactory.SendMesaageToExchange(RabbitMQConstans.UserExchangeName, RabbitMQConstans.ExchangeType, RabbitMQConstans.UserEmailChangeQueueName, @event);
 
             dbUser.Status = false;
             await _repository.Update(dbUser);

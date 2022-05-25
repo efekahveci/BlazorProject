@@ -45,7 +45,7 @@ public class CreateUserHandler : IRequestHandler<CreateUserCommand, Guid>
                 NewEmail = dbUser.Email
             };
 
-            QueueFactory.SendMesaageToExchange(_conf["RabbitMQ:UserExchangeName"], _conf["RabbitMQ:ExchangeType"], _conf["RabbitMQ:UserEmailChangeQueueName"], @event);
+            QueueFactory.SendMesaageToExchange(RabbitMQConstans.UserExchangeName,RabbitMQConstans.ExchangeType, RabbitMQConstans.UserEmailChangeQueueName, @event);
 
         }
 
