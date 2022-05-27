@@ -14,7 +14,4 @@ public static class RabbitMQConstans
     public const string UserEmailChangeQueueName = "UserEmailChangeQueueName";
     public const string ExchangeType = "direct";
 
-
-
-
 }

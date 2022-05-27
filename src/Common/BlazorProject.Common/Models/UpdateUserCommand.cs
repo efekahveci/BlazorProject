@@ -6,15 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlazorProject.Common.Models
+namespace BlazorProject.Common.Models;
+
+public class UpdateUserCommand:IRequest<Guid>
 {
-    public class UpdateUserCommand:IRequest<Guid>
-    {
-        public Guid Id { get; set; }
-        [Email]
-        public string Email { get; set; }
-        [Username]
-        public string Nickname { get; set; }
-  
-    }
+    public Guid Id { get; set; }
+    [Email]
+    public string Email { get; set; }
+    [Username]
+    public string Nickname { get; set; }
+
 }
