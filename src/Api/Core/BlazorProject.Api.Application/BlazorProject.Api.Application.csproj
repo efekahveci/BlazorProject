@@ -22,9 +22,4 @@
     <ProjectReference Include="..\BlazorProject.Api.Domain\BlazorProject.Api.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Commands\Entry\" />
-    <Folder Include="Features\Commands\EntryComment\" />
-  </ItemGroup>
-
 </Project>

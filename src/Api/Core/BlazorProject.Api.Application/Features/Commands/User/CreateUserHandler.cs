@@ -2,7 +2,7 @@
 using BlazorProject.Api.Application.Interfaces.Repositories;
 using BlazorProject.Common.Events.User;
 using BlazorProject.Common.Exceptions;
-using BlazorProject.Common.Models;
+using BlazorProject.Common.Models.CommandModel;
 using BlazorProject.Common.Queue;
 using MediatR;
 using Microsoft.Extensions.Configuration;
