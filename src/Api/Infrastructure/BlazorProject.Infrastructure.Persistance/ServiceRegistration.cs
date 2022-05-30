@@ -22,15 +22,14 @@ public static class ServiceRegistration
     {
         serviceCollection.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         serviceCollection.AddSingleton<IEngine, BlazorSocialContextEngine>();
-        //serviceCollection.AddScoped<IUserRepository, UserRepository>();
-        //serviceCollection.AddScoped<IEntryRepository, EntryRepository>();
+
 
         var classes = Assembly.GetExecutingAssembly().GetTypes().Where(type => type.BaseType is not null
         && type.BaseType.IsGenericType
         && type.BaseType.GetGenericTypeDefinition() == typeof(GenericRepository<>)).ToList();
 
         foreach (var item in classes)
-            serviceCollection.AddScoped(item.GetInterfaces()[1], item);
+            serviceCollection.AddScoped(item.GetInterfaces().Where(x => x.Name != "IGenericRepository`1").FirstOrDefault(), item);
 
 
         serviceCollection.AddDbContext<BlazorSocialContext>(options =>
