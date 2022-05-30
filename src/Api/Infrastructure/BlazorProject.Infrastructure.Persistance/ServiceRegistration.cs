@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using BlazorProject.Api.Application.Interfaces.Repositories;
@@ -21,9 +22,22 @@ public static class ServiceRegistration
     {
         serviceCollection.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         serviceCollection.AddSingleton<IEngine, BlazorSocialContextEngine>();
-        serviceCollection.AddScoped<IUserRepository, UserRepository>();
+        //serviceCollection.AddScoped<IUserRepository, UserRepository>();
+        //serviceCollection.AddScoped<IEntryRepository, EntryRepository>();
 
- 
+        var classes = Assembly.GetExecutingAssembly().GetTypes().Where(type => type.BaseType != null
+        && type.BaseType.IsGenericType
+        && type.BaseType.GetGenericTypeDefinition() == (typeof(GenericRepository<>))).ToList();
+
+        foreach (var item in classes)
+        {
+            var interfaceType = item.GetInterfaces().Where(x => x == (typeof(IGenericRepository<>))).ToList();
+            if (interfaceType != null)
+            {
+                serviceCollection.AddScoped(interfaceType.First(), item);
+            }   
+            //   serviceCollection.AddScoped( item);
+        }
 
         serviceCollection.AddDbContext<BlazorSocialContext>(options =>
         options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));

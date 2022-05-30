@@ -1,4 +1,5 @@
-﻿using BlazorProject.Common.Models.CommandModel;
+﻿using BlazorProject.Api.Application.Features.Queries;
+using BlazorProject.Common.Models.CommandModel;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +16,13 @@ public class EntryController : BaseController
     {
         _mediator = mediator;
     }
-
+    [HttpGet("getAllEntries")]
+    public async Task<IActionResult> GetAllEntries([FromQuery] GetEntriesQuery query)
+    {
+        var result = await _mediator.Send(query);
+        return Ok(result);
+    }
+   
     [HttpPost("createEntry")]
     public async Task<IActionResult> Post([FromBody] CreateEntryCommand command)
     {
