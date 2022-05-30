@@ -25,19 +25,13 @@ public static class ServiceRegistration
         //serviceCollection.AddScoped<IUserRepository, UserRepository>();
         //serviceCollection.AddScoped<IEntryRepository, EntryRepository>();
 
-        var classes = Assembly.GetExecutingAssembly().GetTypes().Where(type => type.BaseType != null
+        var classes = Assembly.GetExecutingAssembly().GetTypes().Where(type => type.BaseType is not null
         && type.BaseType.IsGenericType
-        && type.BaseType.GetGenericTypeDefinition() == (typeof(GenericRepository<>))).ToList();
+        && type.BaseType.GetGenericTypeDefinition() == typeof(GenericRepository<>)).ToList();
 
         foreach (var item in classes)
-        {
-            var interfaceType = item.GetInterfaces().Where(x => x == (typeof(IGenericRepository<>))).ToList();
-            if (interfaceType != null)
-            {
-                serviceCollection.AddScoped(interfaceType.First(), item);
-            }   
-            //   serviceCollection.AddScoped( item);
-        }
+            serviceCollection.AddScoped(item.GetInterfaces()[1], item);
+
 
         serviceCollection.AddDbContext<BlazorSocialContext>(options =>
         options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
