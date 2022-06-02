@@ -1,5 +1,6 @@
 ﻿using BlazorProject.Api.Application.Features.Queries;
 using BlazorProject.Common.Models.CommandModel;
+using BlazorProject.Common.Models.QueryModel;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -34,6 +35,15 @@ public class EntryController : BaseController
     public async Task<IActionResult> Post([FromBody] CreateEntryCommentCommand command)
     {
         var result = await _mediator.Send(command);
+        return Ok(result);
+    }
+
+    [HttpGet]
+    [Route("Search")]
+    public async Task<IActionResult> Search([FromQuery] SearchEntryQuery query)
+    {
+        var result = await _mediator.Send(query);
+
         return Ok(result);
     }
 

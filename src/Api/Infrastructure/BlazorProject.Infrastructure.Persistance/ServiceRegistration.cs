@@ -28,8 +28,9 @@ public static class ServiceRegistration
         && type.BaseType.IsGenericType
         && type.BaseType.GetGenericTypeDefinition() == typeof(GenericRepository<>)).ToList();
 
+
         foreach (var item in classes)
-            serviceCollection.AddScoped(item.GetInterfaces().Where(x => x.Name != "IGenericRepository`1").FirstOrDefault(), item);
+            item.GetInterfaces().Where(x => !x.IsGenericType).ToList().ForEach(x => serviceCollection.AddScoped(x, item));
 
 
         serviceCollection.AddDbContext<BlazorSocialContext>(options =>

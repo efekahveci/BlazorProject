@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace BlazorProject.Common.Models.ViewModel;
 
-public class LoginUserView
+public class SearchEntryViewModel
 {
     public Guid Id { get; set; }
-    public string Nickname { get; set; }
 
-    public string Token { get; set; }
+    public string Subject { get; set; }
 }
+
