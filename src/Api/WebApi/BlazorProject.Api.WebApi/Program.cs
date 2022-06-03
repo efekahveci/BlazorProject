@@ -1,4 +1,5 @@
 using BlazorProject.Api.Application;
+using BlazorProject.Api.WebApi.Extensions;
 using BlazorProject.Infrastructure.Persistance;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddPersistanceLayer(builder.Configuration);
 builder.Services.AddApplicationLayer();
+builder.Services.AddAuth(builder.Configuration);
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -24,6 +26,9 @@ if (app.Environment.IsDevelopment())
 app.ConfigureRequestPipeline();
 app.UseHttpsRedirection();
 
+app.ConfigureExceptionHandling(app.Environment.IsDevelopment());
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

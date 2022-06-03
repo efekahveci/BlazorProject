@@ -19,7 +19,7 @@ public class EntryController : BaseController
     }
     [HttpGet("getAllEntries")]
     public async Task<IActionResult> GetAllEntries([FromQuery] GetEntriesQuery query)
-    {
+    {       
         var result = await _mediator.Send(query);
         return Ok(result);
     }
