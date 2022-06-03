@@ -5,7 +5,7 @@ using BlazorProject.Common.Models.ViewModel;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace BlazorProject.Api.Application.Features.Queries;
+namespace BlazorProject.Api.Application.Features.Queries.Entry;
 
 public class GetEntriesQueryHandler : IRequestHandler<GetEntriesQuery, List<GetEntriesView>>
 {
@@ -17,7 +17,7 @@ public class GetEntriesQueryHandler : IRequestHandler<GetEntriesQuery, List<GetE
         _entryRepo = entryRepo;
         _mapper = mapper;
     }
- 
+
     public async Task<List<GetEntriesView>> Handle(GetEntriesQuery request, CancellationToken cancellationToken)
     {
         var query = _entryRepo.GetAllQuery;

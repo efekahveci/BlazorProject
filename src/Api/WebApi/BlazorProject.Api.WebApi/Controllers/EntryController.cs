@@ -1,4 +1,4 @@
-﻿using BlazorProject.Api.Application.Features.Queries;
+﻿using BlazorProject.Api.Application.Features.Queries.Entry;
 using BlazorProject.Common.Models.CommandModel;
 using MediatR;
 using Microsoft.AspNetCore.Http;

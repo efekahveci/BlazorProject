@@ -21,6 +21,8 @@ namespace BlazorProject.Api.Application.Mapping
             CreateMap<Entry, CreateEntryCommand>().ReverseMap();
             CreateMap<Entry, GetEntriesView>()
                 .ForMember(x => x.Count, y => y.MapFrom(z => z.EntryComments.Count));
+            CreateMap<EntryComment, GetEntryCommentsView>().ReverseMap();
+
         }
     }
 }
