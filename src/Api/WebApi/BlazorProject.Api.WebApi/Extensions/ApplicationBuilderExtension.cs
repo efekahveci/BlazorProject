@@ -34,7 +34,7 @@ public static class ApplicationBuilderExtension
         return app;
     }
 
-    //TODO loglama ile detaylı mesajşlar db ye normal exceptionlar kullanıcıya gösterilecek
+    //TODO loglama ile detaylı mesajlarlar db ye normal exceptionlar kullanıcıya gösterilecek
     private static async Task DefaultHandleException(HttpContext context , Exception exception, bool includeDetail)
     {
 
